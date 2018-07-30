@@ -17,17 +17,17 @@ def build_input_fn(fnames, hparams, is_training=True, use_tpu=True):
   '''Build the input function.'''
   def parse_fn(proto):
     '''Parse a single Tensorflow example from a `TFRecord`.
-    
+
     Args:
       proto: The serialized protobuf of the `tf.Example`
-      
+
     Returns:
       A `Tensor` containing the image.
       A one-hot `Tensor` containing the label.
     '''
 
     features = {
-        'im': tf.FixedLenFeature([28*28], tf.float32),
+        'im': tf.FixedLenFeature([28 * 28], tf.float32),
         'label': tf.FixedLenFeature([], tf.int64),
     }
     parsed_features = tf.parse_single_example(proto, features)
@@ -99,7 +99,7 @@ def build_model_fn(hparams):
     if hparams.use_tpu:
       optimizer = tf.contrib.tpu.CrossShardOptimizer(optimizer)
     train_op = optimizer.minimize(loss, global_step=tf.train.get_global_step())
-    
+
     def metric_fn(labels, logits):
       predictions = tf.argmax(logits, axis=1)
       accuracy = tf.metrics.accuracy(tf.argmax(labels, axis=1), predictions)
@@ -114,9 +114,9 @@ def build_model_fn(hparams):
                                              eval_metrics=eval_metrics)
     else:
       return tf.estimator.EstimatorSpec(mode=mode,
-                                         loss=loss,
-                                         train_op=train_op,
-                                         eval_metric_ops=eval_metric_ops)
+                                        loss=loss,
+                                        train_op=train_op,
+                                        eval_metric_ops=eval_metric_ops)
   return model_fn
 
 

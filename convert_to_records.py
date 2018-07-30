@@ -39,7 +39,7 @@ def convert_mnist_to_numpy(data_dir):
       outname = 'test' + outname[4:]
 
     np.save(os.path.join(data_dir, outname), arr)
-      
+
 
 def make_example(im, label):
   '''Convert a numpy array and label to a Tensorflow `Example`.'''
@@ -84,7 +84,8 @@ def main(args):
 
 
 if __name__ == '__main__':
-  parser = argparse.ArgumentParser(description='Convert MNIST data to TFRecords')
+  parser = argparse.ArgumentParser(
+      description='Convert MNIST data to TFRecords')
   parser.add_argument('--data_dir')
   args = parser.parse_args()
   main(args)
